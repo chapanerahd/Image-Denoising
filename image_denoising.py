@@ -49,15 +49,15 @@ def set_parameters(f_size, image_shape):
     return filter_value, patch_size, patch_value
 
 
-def init_filter(f_size, filter_type):
+def init_filter(f_values, f_type):
     """
     Takes filter size and filter type
     and initializes the filter according to the tpye
     """
-    if filter_type == "zero":
-        f = np.zeros((f_size, 1))
+    if f_type == "zero":
+        f = np.zeros((f_values, 1))
     else:
-        f = np.random.rand(filter_values, 1)
+        f = np.random.rand(f_values, 1)
     return f
 
 
@@ -120,12 +120,13 @@ if __name__ == "__main__":
     filter_size = 3
     learning_rate = 0.01
     iterations = 10000
+    filter_type = "random"
 
     # Get other parameters according to filter size
     filter_values, patch_size, patch_values = set_parameters(filter_size, sgx_train.shape[0])
 
     # Initialize the filter
-    f = init_filter(filter_values, "random")
+    f = init_filter(filter_values, filter_type)
 
     # Prepare the training and test data
     sgx_train_patched = process_image(sgx_train, filter_size, filter_values, patch_size, patch_values)
